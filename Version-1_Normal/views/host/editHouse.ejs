@@ -1,0 +1,107 @@
+<%- include('../partials/head') %>
+  </head>
+  <body class="min-h-screen bg-gray-100 text-gray-800">
+    <%- include('../partials/navbar') %>
+
+    <header class="bg-white px-4 py-8 text-center">
+      <h1 class="text-3xl font-bold text-red-500">
+        <%= editing ? "Edit" : "Register" %> your house here
+      </h1>
+      <p class="mt-2 text-gray-500">
+        <%= editing ? "Update" : "Add" %> the details of your property.
+      </p>
+    </header>
+
+    <main class="mx-auto w-11/12 max-w-2xl py-10">
+      <div class="overflow-hidden rounded-2xl bg-white shadow-lg">
+        <div class="border-b border-gray-200 bg-gray-50 px-6 py-5">
+          <h2 class="text-xl font-bold text-gray-800">House Details</h2>
+          <p class="mt-1 text-sm text-gray-500">
+            Enter the information guests need to know.
+          </p>
+        </div>
+
+        <form
+          action="/host/<%= editing ? 'edit-house' : 'add-house' %>"
+          method="POST"
+          class="grid gap-5 p-6"
+        >
+          <input type="hidden" name="id" value="<%= editing ? house.id : '' %>" />
+
+          <div>
+            <label for="houseName" class="mb-2 block font-semibold text-gray-700"
+              >House Name</label
+            >
+            <input
+              id="houseName"
+              type="text"
+              name="houseName"
+              value="<%= editing ? house.houseName : '' %>"
+              placeholder="Enter your house name"
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100"
+            />
+          </div>
+          <div>
+            <label for="price" class="mb-2 block font-semibold text-gray-700"
+              >Price per Night</label
+            >
+            <input
+              id="price"
+              type="text"
+              name="price"
+              value="<%= editing ? house.price : '' %>"
+              placeholder="Enter price per night"
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100"
+            />
+          </div>
+          <div>
+            <label for="location" class="mb-2 block font-semibold text-gray-700"
+              >Location</label
+            >
+            <input
+              id="location"
+              type="text"
+              name="location"
+              value="<%= editing ? house.location : '' %>"
+              placeholder="Enter house location"
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100"
+            />
+          </div>
+          <div>
+            <label for="rating" class="mb-2 block font-semibold text-gray-700"
+              >Rating</label
+            >
+            <input
+              id="rating"
+              type="text"
+              name="rating"
+              value="<%= editing ? house.rating : '' %>"
+              placeholder="Enter house rating"
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100"
+            />
+          </div>
+          <div>
+            <label for="photo" class="mb-2 block font-semibold text-gray-700"
+              >Photo URL</label
+            >
+            <input
+              id="photoUrl"
+              type="text"
+              name="photoUrl"
+              value="<%= editing ? house.photoUrl : '' %>"
+              placeholder="Enter photo URL"
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100"
+            />
+          </div>
+          <button
+            type="submit"
+            class="cursor-pointer mt-2 w-full rounded-lg bg-red-500 px-5 py-3 font-semibold text-white hover:bg-red-600"
+          >
+            <%= editing ? "Update" : "Register" %> House
+          </button>
+        </form>
+      </div>
+    </main>
+  </body>
+
+</html>

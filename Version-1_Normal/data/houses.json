@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "houseName": "Mahal",
+    "price": "2500",
+    "location": "Goa",
+    "rating": "4.8",
+    "photoUrl": "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=900&q=80"
+  },
+  {
+    "houseName": "Modern City Home",
+    "price": "1000",
+    "location": "Delhi",
+    "rating": "4.0",
+    "photoUrl": "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=900&q=80",
+    "id": "2"
+  },
+  {
+    "id": "3",
+    "houseName": "Pink City Villa",
+    "price": "1500",
+    "location": "Jaipur",
+    "rating": "4.2",
+    "photoUrl": "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=80"
+  },
+  {
+    "id": "4",
+    "houseName": "Mountain View Home",
+    "price": "2200",
+    "location": "Manali",
+    "rating": "4.7",
+    "photoUrl": "https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=900&q=80"
+  },
+  {
+    "id": "5",
+    "houseName": "Beach Side Stay",
+    "price": "3000",
+    "location": "Kerala",
+    "rating": "4.9",
+    "photoUrl": "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?auto=format&fit=crop&w=900&q=80"
+  },
+  {
+    "id": "6",
+    "houseName": "Lake View Cottage",
+    "price": "1800",
+    "location": "Udaipur",
+    "rating": "4.5",
+    "photoUrl": "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=900&q=80"
+  }
+]
