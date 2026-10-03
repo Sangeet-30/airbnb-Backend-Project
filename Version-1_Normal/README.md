@@ -7,7 +7,14 @@ This version uses **JSON files for data storage** instead of a database.
 It helped me understand the basic structure and flow of a backend
 application before moving to MySQL and MongoDB.
 
-## Tech Stack
+## 🚀 Live Demo
+
+[Live Demo](https://airbnb-backend-v1-rsow.onrender.com)
+
+> The live demo is deployed on Render's free plan, so the first request
+> after inactivity may take some time to respond.
+
+## 🛠️ Tech Stack
 
 - Node.js
 - Express.js
@@ -16,7 +23,7 @@ application before moving to MySQL and MongoDB.
 - Tailwind CSS
 - JSON File Storage
 
-## Concepts Covered
+## 📚 Concepts Covered
 
 - Node.js & Express.js
 - Express Routing
@@ -32,8 +39,9 @@ application before moving to MySQL and MongoDB.
 - Static Files
 - Error / 404 Handling
 - Tailwind CSS
+- Deployment with Render
 
-## Features
+## ✨ Features
 
 ### User Side
 
@@ -51,9 +59,9 @@ application before moving to MySQL and MongoDB.
 - Edit house details
 - Delete a house
 
-## Data Storage
+## 💾 Data Storage
 
-This version uses JSON files as a simple form of persistent storage:
+This version uses JSON files for data storage:
 
 ```text
 data/
