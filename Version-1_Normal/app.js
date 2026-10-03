@@ -23,7 +23,8 @@ app.use(express.static(path.join(pathDir, "public")));
 
 app.use(errorsController.get404);
 
-const PORT = 3001;
-app.listen(PORT, () => {
-  console.log(`Server is running in address: http://localhost:${PORT}`);
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server is running on port ${PORT}`);
 });
