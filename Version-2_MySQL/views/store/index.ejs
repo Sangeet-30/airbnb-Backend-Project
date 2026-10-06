@@ -1,0 +1,88 @@
+<%- include('../partials/head') %>
+  </head>
+  <body class="min-h-screen bg-gray-100 text-gray-800">
+    <%- include('../partials/navbar') %>
+
+    <header class="bg-white px-4 py-14 text-center shadow-sm">
+      <p class="text-sm font-semibold uppercase tracking-widest text-red-500">
+        Stay somewhere you love
+      </p>
+      <h1 class="mt-2 text-4xl font-bold text-gray-900">Welcome to airbnb</h1>
+      <p class="mx-auto mt-3 max-w-xl text-gray-500">
+        Find comfortable homes, beautiful places and memorable stays.
+      </p>
+      <a
+        href="/houses"
+        class="mt-6 inline-block rounded-lg bg-red-500 px-6 py-3 font-semibold text-white hover:bg-red-600"
+        >Explore Houses</a
+      >
+    </header>
+
+    <main class="mx-auto w-11/12 max-w-6xl py-10">
+      <div class="mb-7">
+        <h2 class="text-2xl font-semibold text-gray-900">Available Houses</h2>
+        <p class="mt-1 text-sm text-gray-500">
+          Browse the latest homes added by hosts.
+        </p>
+      </div>
+
+      <% if (registeredHouses.length === 0) { %>
+      <div class="rounded-2xl bg-white p-8 text-center shadow-sm">
+        <p class="text-gray-500">No houses registered yet.</p>
+        <a
+          href="/host/add-house"
+          class="mt-5 inline-block rounded-lg bg-red-500 px-6 py-3 font-semibold text-white hover:bg-red-600"
+          >Add House</a
+        >
+      </div>
+      <% } else { %>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <% registeredHouses.forEach(house => { %>
+        <article
+          class="overflow-hidden rounded-2xl bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+        >
+          <% if (house.photoUrl) { %>
+          <img
+            src="<%= house.photoUrl %>"
+            alt="<%= house.houseName %>"
+            class="h-52 w-full object-cover"
+          />
+          <% } else { %>
+          <div
+            class="flex h-52 items-center justify-center bg-gray-200 text-gray-500"
+          >
+            No photo
+          </div>
+          <% } %>
+          <div class="p-5">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <h3 class="text-xl font-bold text-gray-900">
+                  <%= house.houseName %>
+                </h3>
+                <p class="mt-1 text-gray-500"><%= house.location %></p>
+              </div>
+              <span
+                class="rounded-full bg-green-50 px-2.5 py-1 text-sm font-semibold text-green-600"
+                >★ <%= house.rating %></span
+              >
+            </div>
+            <div class="mt-5 flex items-center justify-between">
+              <span class="font-semibold text-gray-900"
+                >₹<%= house.price %>
+                <span class="font-normal text-gray-500">/ night</span></span
+              >
+              <a
+                href="/houses/<%= house.id %>"
+                class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+                >View Details</a
+              >
+            </div>
+          </div>
+        </article>
+        <% }) %>
+      </div>
+      <% } %>
+    </main>
+  </body>
+</html>

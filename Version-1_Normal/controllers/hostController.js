@@ -14,10 +14,8 @@ exports.getEditHouse = (req, res, next) => {
 
   House.findById(houseId, (house) => {
     if (!house) {
-      console.log("House not found for editing");
       return res.redirect("/host/host-houses-list");
     }
-    console.log(houseId, editing, house);
     res.render("host/editHouse", {
       house: house,
       pageTitle: "Edit your house",
@@ -61,7 +59,6 @@ exports.postEditHouse = (req, res, next) => {
 
 exports.postDeleteHouse = (req, res, next) => {
   const houseId = req.params.houseId;
-  console.log("Delete House: ", houseId);
   House.deleteById(houseId, (err) => {
     if (err) {
       console.log("Error found while deleting", err);

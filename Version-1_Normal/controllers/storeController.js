@@ -44,7 +44,6 @@ exports.getFavouriteList = (req, res, next) => {
 };
 
 exports.postAddToFavourite = (req, res, next) => {
-  console.log("Add to favourite:", req.body);
   Favourite.addFavourite(req.body.id, (err) => {
     if (err) {
       console.log("Error found:", err);

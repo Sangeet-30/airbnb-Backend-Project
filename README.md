@@ -15,6 +15,10 @@ and concepts are learned and implemented.
 > Note: The free Render instance may take some time to respond after a period
 > of inactivity.
 
+### Version 2 — MySQL
+
+Deployment coming soon.
+
 ## 📂 Project Versions
 
 ### Version 1 — Normal
@@ -39,17 +43,33 @@ Node.js + Express.js backend with file-based JSON storage.
 
 ### Version 2 — MySQL
 
-The Airbnb project is connected to a MySQL database to replace file-based
-data storage and practice SQL database operations.
+The Airbnb project is rebuilt using **MySQL** to replace JSON file-based
+storage and practice relational database operations.
+
+**Concepts covered:**
+
+- MySQL database integration
+- SQL queries
+- Database connection and connection pooling
+- CRUD operations with MySQL
+- Relational data
+- Foreign keys
+- Favourites stored in MySQL
+- SQL JOIN operations
+- Parameterized queries
+- Environment variables for database credentials
+- Async/Await database handling
+- Tailwind CSS
+- Deployment configuration
 
 ### Version 3 — MongoDB
 
-The project is rebuilt using MongoDB and the MongoDB Node.js driver to
+The project is rebuilt using **MongoDB** and the MongoDB Node.js driver to
 practice NoSQL database operations.
 
 ### Version 4 — Mongoose
 
-The project is further developed using Mongoose for schemas, models,
+The project is further developed using **Mongoose** for schemas, models,
 validation, and MongoDB integration.
 
 ## 🛠️ Tech Stack
@@ -58,10 +78,10 @@ validation, and MongoDB integration.
 - Express.js
 - EJS
 - Tailwind CSS
+- JavaScript
 - MySQL
 - MongoDB
 - Mongoose
-- JavaScript
 
 ## ✨ Project Features
 
@@ -71,9 +91,12 @@ validation, and MongoDB integration.
 - Edit houses
 - Delete houses
 - Favourite houses
+- Remove favourite houses
+- View favourite houses
 - Dynamic routes
 - CRUD operations
 - Database integration
+- MVC architecture
 
 ## 📁 Project Structure
 

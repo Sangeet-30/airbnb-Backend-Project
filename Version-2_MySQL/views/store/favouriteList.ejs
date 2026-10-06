@@ -1,0 +1,69 @@
+<%- include('../partials/head') %>
+  </head>
+  <body class="min-h-screen bg-gray-100 text-gray-800">
+    <%- include('../partials/navbar') %>
+    <header class="bg-white px-4 py-10 text-center">
+      <h1 class="text-3xl font-bold text-red-500">Favourite List</h1>
+      <p class="mt-2 text-gray-500">Your favourite houses list.</p>
+    </header>
+    <main class="mx-auto w-11/12 max-w-6xl py-10">
+      <% if (favouriteHouses.length === 0) { %>
+      <div class="rounded-xl bg-white p-8 text-center shadow-lg">
+        <p class="text-gray-500">No favourite houses yet.</p>
+        <a
+          href="/houses"
+          class="mt-5 inline-block rounded-lg bg-red-500 px-6 py-3 font-semibold text-white"
+          >Browse Houses</a
+        >
+      </div>
+      <% } else { %>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <% favouriteHouses.forEach(house => { %>
+        <article class="overflow-hidden rounded-xl bg-white shadow-lg">
+          <% if (house.photoUrl) { %><img
+            src="<%= house.photoUrl %>"
+            alt="<%= house.houseName %>"
+            class="h-48 w-full object-cover"
+          /><% } else { %>
+          <div
+            class="flex h-48 items-center justify-center bg-gray-200 text-gray-500"
+          >
+            No photo
+          </div>
+          <% } %>
+          <div class="p-5">
+            <h3 class="text-xl font-bold"><%= house.houseName %></h3>
+            <p class="mt-2 text-gray-500"><%= house.location %></p>
+            <div class="mt-4 flex items-center justify-between">
+              <span class="font-semibold"
+                >₹<%= house.price %>
+                <span class="font-normal text-gray-500">/ night</span></span
+              ><span class="font-semibold text-green-600"
+                >★ <%= house.rating %></span
+              >
+            </div>
+            <div class="mt-5 flex gap-2">
+              <form action="/favourites/delete/<%= house.id %>" method="POST">
+                <button
+                  type="submit"
+                  class="mt-5 inline-block rounded-lg bg-red-500 px-5 py-2 font-semibold text-white hover:bg-red-600"
+                >
+                  Remove
+                </button>
+              </form>
+
+              <a
+                href="/reserve/<%= house.id %>"
+                class="ml-30 mt-5 inline-block rounded-lg bg-blue-500 px-5 py-2 font-semibold text-white hover:bg-blue-600"
+                >Book</a
+              >
+            </div>
+          </div>
+        </article>
+        <% }) %>
+      </div>
+      <% } %>
+    </main>
+  </body>
+
+</html>
