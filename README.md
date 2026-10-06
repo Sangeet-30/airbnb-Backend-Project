@@ -12,12 +12,14 @@ and concepts are learned and implemented.
 
 [Airbnb Backend V1](https://airbnb-backend-v1-rsow.onrender.com)
 
-> Note: The free Render instance may take some time to respond after a period
-> of inactivity.
+> The live demo is deployed on Render's free plan, so the first request
+> after inactivity may take some time to respond.
 
 ### Version 2 — MySQL
 
-Deployment coming soon.
+[Airbnb Backend V2](https://airbnb-backend-v2.onrender.com)
+
+> The live demo uses a MySQL database hosted on Aiven.
 
 ## 📂 Project Versions
 
@@ -60,7 +62,8 @@ storage and practice relational database operations.
 - Environment variables for database credentials
 - Async/Await database handling
 - Tailwind CSS
-- Deployment configuration
+- Deployment with Render
+- Cloud MySQL deployment with Aiven
 
 ### Version 3 — MongoDB
 
@@ -80,8 +83,11 @@ validation, and MongoDB integration.
 - Tailwind CSS
 - JavaScript
 - MySQL
+- MySQL2
+- Aiven
 - MongoDB
 - Mongoose
+- dotenv
 
 ## ✨ Project Features
 
@@ -103,7 +109,7 @@ validation, and MongoDB integration.
 ```text
 airbnb-Backend-Project/
 ├── Version-1-Normal/
-├── Version-2-MySQL/
+├── Version-2_MySQL/
 ├── Version-3-MongoDB/
 ├── Version-4-Mongoose/
 ├── README.md

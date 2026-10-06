@@ -1,15 +1,18 @@
-# Airbnb Backend Project — Version 2
+# Airbnb Backend Project — Version 2 (MySQL)
 
-The second version of my Airbnb-style backend project, rebuilt using
-**MySQL** for database storage.
+The second version of my Airbnb-style backend project, built while learning
+Node.js, Express.js, and SQL database integration.
 
-This version replaces the JSON file-based storage from Version 1 with a
-relational database and helped me practice SQL queries, database
-relationships, and MySQL integration with Node.js and Express.js.
+This version replaces the JSON file-based storage from Version 1 with
+**MySQL**, allowing the application to persist house and favourite data
+using a relational database.
 
 ## 🚀 Live Demo
 
-Deployment coming soon.
+[Live Demo](https://airbnb-backend-v2.onrender.com)
+
+> The live demo is deployed on Render's free plan, so the first request
+> after inactivity may take some time to respond.
 
 ## 🛠️ Tech Stack
 
@@ -19,6 +22,9 @@ Deployment coming soon.
 - JavaScript
 - Tailwind CSS
 - MySQL
+- MySQL2
+- Aiven
+- dotenv
 
 ## 📚 Concepts Covered
 
@@ -33,16 +39,13 @@ Deployment coming soon.
 - CRUD Operations
 - MySQL Database Integration
 - SQL Queries
-- Database Connection & Connection Pooling
 - Parameterized Queries
-- Relational Data
-- Foreign Keys
-- SQL JOIN Operations
-- Async/Await
+- Database-driven Data Storage
+- Relational Data Handling
 - Environment Variables
-- Error Handling
+- Error / 404 Handling
 - Tailwind CSS
-- Deployment Configuration
+- Deployment with Render
 
 ## ✨ Features
 
@@ -61,12 +64,18 @@ Deployment coming soon.
 - View host house list
 - Edit house details
 - Delete a house
+- Store house data in MySQL
 
-## 💾 MySQL Database
+## 🗄️ Database
 
-This version uses MySQL instead of JSON files for persistent data storage.
+This version uses **MySQL** instead of JSON files.
+
+- **Local Development:** MySQL running locally
+- **Production Deployment:** MySQL hosted on **Aiven**
+
+### Tables
 
 ```text
-airbnb
+airbnb/
 ├── houses
 └── favourites
