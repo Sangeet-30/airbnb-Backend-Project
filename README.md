@@ -20,8 +20,9 @@ The same project is developed through multiple versions as new technologies and 
 
 ### Version 3 — MongoDB
 
-The MongoDB version uses MongoDB Atlas and the native MongoDB Node.js driver. Add the live demo link here when this version is deployed.
+[Airbnb Backend V3 — MongoDB](https://airbnb-backend-v3.onrender.com)
 
+> Deployed on Render and connected to MongoDB Atlas using the native MongoDB Node.js driver. The Render free instance may take some time to respond after inactivity.
 
 ## 📂 Project Versions
 
@@ -86,29 +87,11 @@ The project is rebuilt using **MongoDB** and the native MongoDB Node.js driver t
 - Application lifecycle and graceful connection shutdown
 - Tailwind CSS build and minification
 - MongoDB Atlas integration
-- Deployment with Render (add the live URL when available)
+- Deployment with Render
 
 ### Version 4 — Mongoose
 
 The project is further developed using **Mongoose** for schemas, models, validation, and MongoDB integration.
-
-
-## 🛠️ Tech Stack
-
-- Node.js
-- Express.js
-- EJS
-- JavaScript
-- Tailwind CSS
-- JSON file storage (Version 1)
-- MySQL
-- MySQL2
-- Aiven
-- MongoDB
-- MongoDB Node.js Driver
-- MongoDB Atlas
-- Mongoose
-- dotenv
 
 ## ✨ Project Features
 
@@ -139,8 +122,8 @@ Features vary slightly by version as the project evolves.
 airbnb-Backend-Project/
 ├── Version-1-Normal/
 ├── Version-2_MySQL/
-├── Version-3-MongoDB/
-├── Version-4-Mongoose/
+├── Version-3_MongoDB/
+├── Version-4_Mongoose/
 ├── README.md
 └── .gitignore
 ```
