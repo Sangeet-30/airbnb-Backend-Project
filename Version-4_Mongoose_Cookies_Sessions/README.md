@@ -6,7 +6,9 @@ Version 4 builds on Version 3 by replacing direct MongoDB driver operations with
 
 ## 🚀 Live Demo
 
-Coming Soon...
+**[View the live application](https://airbnb-backend-v4.onrender.com)**
+
+Deployed on Render and connected to MongoDB Atlas.
 
 ## 🛠️ Tech Stack
 
@@ -71,10 +73,10 @@ Coming Soon...
 
 This version uses **MongoDB with Mongoose** for application data and MongoDB-backed storage for Express sessions.
 
-- **Database connection:** configured using `MONGO_URL`
-- **Application data:** stored in MongoDB collections managed through Mongoose models
+- **Database connection:** Configured using `MONGO_URL`
+- **Application data:** Stored in MongoDB collections managed through Mongoose models
 - **Session collection:** `sessions` (created/used by `connect-mongodb-session`)
-- **Session secret:** configured using `SESSION_SECRET`; used to sign the session ID cookie
+- **Session secret:** Configured using `SESSION_SECRET`; used to sign the session ID cookie
 
 The login flow currently demonstrates session creation and protected-route behaviour only. It does **not** verify a real user account or password. Favourites and host listing operations are not yet tied to individual authenticated user accounts.
 
@@ -115,9 +117,9 @@ PORT=3000
 ```
 
 - `MONGO_URL` — MongoDB connection string
-- `SESSION_SECRET` — long, unpredictable secret used to sign session cookies
-- `NODE_ENV` — use `development` locally and `production` when deployed
-- `PORT` — local server port; hosting providers may set this automatically
+- `SESSION_SECRET` — Long, unpredictable secret used to sign session cookies
+- `NODE_ENV` — Use `development` locally and `production` when deployed
+- `PORT` — Local server port; hosting providers may set this automatically
 
 Generate a random session secret with Node.js:
 

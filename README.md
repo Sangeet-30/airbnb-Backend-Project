@@ -26,7 +26,9 @@ The project is developed through multiple versions, with each version exploring 
 
 ### Version 4 — Mongoose + Cookies & Sessions
 
-> Currently tested locally. A live demo will be added after deployment.
+[Airbnb Backend V4 — Mongoose + Cookies & Sessions](https://airbnb-backend-v4.onrender.com)
+
+> Deployed on Render and connected to MongoDB Atlas. Uses Mongoose for application data and MongoDB-backed session storage for Express sessions. The Render free instance may take some time to respond after inactivity.
 
 ## 📂 Project Versions
 
@@ -101,13 +103,14 @@ This version uses **Mongoose** for schema-based MongoDB interactions and introdu
 - MongoDB integration through Mongoose
 - Cookies and session management with Express Session
 - MongoDB-backed session storage
-- Login and logout flow
+- Demo login and logout flow
 - Session-based access checks for host routes
 - Environment variables for database credentials and session secrets
+- HTTP-only and production secure cookie configuration
 - Tailwind CSS
-- Local development and testing
+- Deployment with Render
 
-> **Note:** This version is currently tested locally. Authentication is a learning implementation; verify that credentials are validated and authorization is enforced before treating it as production-ready or deploying it publicly.
+> **Security note:** The login flow is a learning demonstration and does not verify real user credentials. Host route checks rely on session state, and listings and favourites are not yet associated with individual authenticated users. Do not treat this as production authentication.
 
 ## 🛠️ Tech Stack
 
@@ -120,7 +123,7 @@ This version uses **Mongoose** for schema-based MongoDB interactions and introdu
 - MySQL and MySQL2 (Version 2)
 - Aiven (Version 2)
 - MongoDB and the native MongoDB Node.js driver (Version 3)
-- MongoDB Atlas (Version 3)
+- MongoDB Atlas (Versions 3 and 4)
 - Mongoose (Version 4)
 - Express Session and MongoDB-backed session storage (Version 4)
 - dotenv
@@ -150,7 +153,7 @@ Features vary by version as the project evolves.
 - Use separate database credentials with only the permissions each version needs.
 - Never publish database passwords, session secrets, or connection strings.
 - Use secure cookie settings in production and deploy behind HTTPS.
-- Do not treat the Version 4 demo login as production-ready unless credentials are verified and authorization is properly enforced.
+- Do not treat the Version 4 demo login as production-ready unless real credential verification and user-specific authorization are implemented.
 
 ## 📁 Project Structure
 
