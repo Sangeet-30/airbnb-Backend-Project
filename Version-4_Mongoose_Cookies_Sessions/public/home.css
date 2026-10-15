@@ -1,0 +1,28 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  background-color: aliceblue;
+  height: 10rem;
+  padding-top: 4rem;
+}
+h1 {
+  color: orangered;
+  text-align: center;
+  font-size: 2rem;
+}
+
+main {
+  margin: 3rem auto;
+  height: 15rem;
+  width: 50%;
+  background-color: azure;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  text-align: center;
+  padding-top: 5rem;
+}

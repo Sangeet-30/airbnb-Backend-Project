@@ -2,7 +2,7 @@
 
 A backend development project inspired by Airbnb, built while learning Node.js, Express.js, databases, and backend development concepts.
 
-The same project is developed through multiple versions as new technologies and concepts are learned and implemented.
+The project is developed through multiple versions, with each version exploring a different database technology or backend concept.
 
 ## 🚀 Live Demos
 
@@ -10,13 +10,13 @@ The same project is developed through multiple versions as new technologies and 
 
 [Airbnb Backend V1](https://airbnb-backend-v1-rsow.onrender.com)
 
-> The live demo is deployed on Render's free plan, so the first request after inactivity may take some time to respond.
+> Deployed on Render's free plan. The first request after inactivity may take some time to respond.
 
 ### Version 2 — MySQL
 
 [Airbnb Backend V2](https://airbnb-backend-v2.onrender.com)
 
-> The live demo uses a MySQL database hosted on Aiven.
+> Uses a MySQL database hosted on Aiven.
 
 ### Version 3 — MongoDB
 
@@ -24,31 +24,33 @@ The same project is developed through multiple versions as new technologies and 
 
 > Deployed on Render and connected to MongoDB Atlas using the native MongoDB Node.js driver. The Render free instance may take some time to respond after inactivity.
 
+### Version 4 — Mongoose + Cookies & Sessions
+
+> Currently tested locally. A live demo will be added after deployment.
+
 ## 📂 Project Versions
 
 ### Version 1 — Normal
 
-Node.js + Express.js backend with file-based JSON storage.
+Node.js and Express.js backend with file-based JSON storage.
 
 **Concepts covered:**
 
-- Node.js
-- Express.js
+- Node.js and Express.js
 - EJS
-- Routing
-- Dynamic Paths
-- MVC Architecture
-- Controllers & Models
-- CRUD Operations
+- Routing and dynamic paths
+- MVC architecture
+- Controllers and models
+- CRUD operations
 - Favourites
-- Edit & Delete functionality
+- Edit and delete functionality
 - JSON file-based data storage
 - Tailwind CSS
 - Deployment with Render
 
 ### Version 2 — MySQL
 
-The Airbnb project is rebuilt using **MySQL** to replace JSON file-based storage and practise relational database operations.
+The project was rebuilt using **MySQL** to replace JSON file-based storage and practise relational database operations.
 
 **Concepts covered:**
 
@@ -56,20 +58,19 @@ The Airbnb project is rebuilt using **MySQL** to replace JSON file-based storage
 - SQL queries
 - Database connection and connection pooling
 - CRUD operations with MySQL
-- Relational data
-- Foreign keys
+- Relational data and foreign keys
 - Favourites stored in MySQL
 - SQL JOIN operations
 - Parameterized queries
 - Environment variables for database credentials
-- Async/Await database handling
+- Async/await database handling
 - Tailwind CSS
 - Deployment with Render
 - Cloud MySQL deployment with Aiven
 
 ### Version 3 — MongoDB
 
-The project is rebuilt using **MongoDB** and the native MongoDB Node.js driver to practise NoSQL database operations.
+The project was rebuilt using **MongoDB** and the native MongoDB Node.js driver to practise NoSQL database operations.
 
 **Concepts covered:**
 
@@ -89,13 +90,44 @@ The project is rebuilt using **MongoDB** and the native MongoDB Node.js driver t
 - MongoDB Atlas integration
 - Deployment with Render
 
-### Version 4 — Mongoose
+### Version 4 — Mongoose + Cookies & Sessions
 
-The project is further developed using **Mongoose** for schemas, models, validation, and MongoDB integration.
+This version uses **Mongoose** for schema-based MongoDB interactions and introduces cookie/session concepts for maintaining state across HTTP requests.
+
+**Concepts covered:**
+
+- Mongoose schemas and models
+- Schema validation and model-based database operations
+- MongoDB integration through Mongoose
+- Cookies and session management with Express Session
+- MongoDB-backed session storage
+- Login and logout flow
+- Session-based access checks for host routes
+- Environment variables for database credentials and session secrets
+- Tailwind CSS
+- Local development and testing
+
+> **Note:** This version is currently tested locally. Authentication is a learning implementation; verify that credentials are validated and authorization is enforced before treating it as production-ready or deploying it publicly.
+
+## 🛠️ Tech Stack
+
+- Node.js
+- Express.js
+- EJS
+- JavaScript
+- Tailwind CSS
+- JSON file storage (Version 1)
+- MySQL and MySQL2 (Version 2)
+- Aiven (Version 2)
+- MongoDB and the native MongoDB Node.js driver (Version 3)
+- MongoDB Atlas (Version 3)
+- Mongoose (Version 4)
+- Express Session and MongoDB-backed session storage (Version 4)
+- dotenv
 
 ## ✨ Project Features
 
-Features vary slightly by version as the project evolves.
+Features vary by version as the project evolves.
 
 - Browse house listings
 - View house details
@@ -108,13 +140,17 @@ Features vary slightly by version as the project evolves.
 - CRUD operations
 - Database integration
 - MVC architecture
+- Session-based state management in Version 4
 
 ## 🔐 Configuration and Security
 
 - Configure database connection details through environment variables.
 - Keep `.env` out of Git; commit `.env.example` with placeholder values instead.
-- Use separate database credentials with only the permissions each deployed version needs.
-- Never publish database passwords or connection strings in the repository.
+- Keep `SESSION_SECRET` strong, private, and configured separately for local development and deployment.
+- Use separate database credentials with only the permissions each version needs.
+- Never publish database passwords, session secrets, or connection strings.
+- Use secure cookie settings in production and deploy behind HTTPS.
+- Do not treat the Version 4 demo login as production-ready unless credentials are verified and authorization is properly enforced.
 
 ## 📁 Project Structure
 
@@ -123,7 +159,7 @@ airbnb-Backend-Project/
 ├── Version-1-Normal/
 ├── Version-2_MySQL/
 ├── Version-3_MongoDB/
-├── Version-4_Mongoose/
+├── Version-4_Mongoose_Cookies_Sessions/
 ├── README.md
 └── .gitignore
 ```
@@ -133,5 +169,6 @@ airbnb-Backend-Project/
 - **Version 1:** JSON file-based storage
 - **Version 2:** MySQL with Aiven
 - **Version 3:** MongoDB with the native MongoDB Node.js driver
+- **Version 4:** Mongoose, cookies, and sessions
 
-Each version builds on the previous one and explores a different approach to backend data storage and database integration.
+Each version builds on the previous one and explores a different approach to backend data storage, database integration, and session management.
