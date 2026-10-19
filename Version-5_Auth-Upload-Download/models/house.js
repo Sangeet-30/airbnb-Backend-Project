@@ -13,6 +13,7 @@ const houseSchema = new mongoose.Schema(
     location: { type: String, required: true, trim: true, maxlength: 120 },
     rating: { type: Number, required: true, min: 0, max: 5 },
     photo: { type: String, default: "" },
+    photoPublicId: { type: String, default: "" },
     description: { type: String, trim: true, maxlength: 2000, default: "" },
     host: {
       type: mongoose.Schema.Types.ObjectId,

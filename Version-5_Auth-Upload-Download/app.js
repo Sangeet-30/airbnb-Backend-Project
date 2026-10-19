@@ -1,7 +1,7 @@
+require('dotenv').config();
+
 // Core modules
 const path = require('path');
-const crypto = require('crypto');
-const fs = require('fs');
 
 // External modules
 const express = require('express');
@@ -9,7 +9,6 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const multer = require('multer');
-const { randomUUID } = crypto;
 
 // Local modules
 const authRouter = require('./routes/authRouter');
@@ -17,8 +16,6 @@ const storeRouter = require('./routes/storeRouter');
 const hostRouter = require('./routes/hostRouter');
 const pathDir = require('./utils/pathUtil');
 const errorsController = require('./controllers/errors');
-
-require('dotenv').config();
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -30,9 +27,6 @@ if (!MONGO_URL || !SESSION_SECRET) {
   process.exit(1);
 }
 
-const uploadsDir = path.join(pathDir, 'uploads');
-fs.mkdirSync(uploadsDir, { recursive: true });
-
 app.set('view engine', 'ejs');
 app.set('views', path.join(pathDir, 'views'));
 if (process.env.NODE_ENV === 'production') app.set('trust proxy', 1);
@@ -42,7 +36,6 @@ store.on('error', (err) => console.error('Session store error:', err.message));
 
 app.use(express.urlencoded({ extended: false, limit: '20kb' }));
 app.use(express.static(path.join(pathDir, 'public')));
-app.use('/uploads', express.static(uploadsDir));
 
 app.use(session({
   name: 'airbnb.sid',
@@ -65,16 +58,11 @@ app.use((req, res, next) => {
   next();
 });
 
-const storage = multer.diskStorage({
-  destination: (_req, _file, cb) => cb(null, uploadsDir),
-  filename: (_req, file, cb) => {
-    const ext = path.extname(file.originalname).toLowerCase();
-    cb(null, `${randomUUID()}${ext}`);
-  },
-});
+const { storage: cloudinaryStorage } = require('./utils/cloudinary');
+
 const allowedMimeTypes = new Set(['image/jpeg', 'image/png']);
 const uploadPhoto = multer({
-  storage,
+  storage: cloudinaryStorage,
   limits: { fileSize: 5 * 1024 * 1024, files: 1 },
   fileFilter: (_req, file, cb) => {
     if (!allowedMimeTypes.has(file.mimetype)) return cb(new Error('Only JPG and PNG images up to 5 MB are allowed.'));
@@ -99,11 +87,25 @@ app.use('/host', hostRouter);
 
 app.use(errorsController.get404);
 app.use((err, req, res, next) => {
-  console.error(err);
   if (res.headersSent) return next(err);
-  if (err instanceof multer.MulterError || /Only JPG and PNG/.test(err.message || '')) {
-    return res.status(400).send(err.message || 'Invalid upload.');
+  if (
+    err instanceof multer.MulterError ||
+    err.http_code === 403 ||
+    err.name === "UnexpectedResponse" ||
+    /Only JPG and PNG|cloudinary|upload/i.test(err.message || "")
+  ) {
+    console.error("Cloudinary / Upload Error:", {
+      message: err.message,
+      http_code: err.http_code,
+      name: err.name,
+    });
+    const errorMsg =
+      err.message && /missing permissions/i.test(err.message)
+        ? "Cloudinary upload failed: API key has restricted permissions in Cloudinary console."
+        : err.message || "Invalid upload.";
+    return res.status(400).send(errorMsg);
   }
+  console.error(err);
   res.status(500).render('404', {
     pageTitle: 'Server Error', currentPage: 'error', isLoggedIn: Boolean(req.session?.isLoggedIn),
     user: req.session?.user || null,
