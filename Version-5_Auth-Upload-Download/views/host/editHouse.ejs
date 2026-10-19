@@ -113,11 +113,14 @@
           <input
             id="photo"
             type="file"
-            accept="image/jpeg, image/png"
+            accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
             name="photo"
             class="cursor-pointer w-full rounded-lg border border-gray-300 px-4 py-3 text-sm text-gray-500 outline-none file:mr-4 file:rounded-md file:border-0 file:bg-red-50 file:px-3 file:py-1 file:text-sm file:font-semibold file:text-red-600 hover:file:bg-red-100 focus:border-red-500 focus:ring-2 focus:ring-red-100"
           />
-          <p class="mt-1 text-xs text-gray-400">JPG or PNG, max 5 MB.</p>
+          <div class="mt-1 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+            <p class="text-xs text-gray-400">JPG, PNG, or WebP, max 5 MB.</p>
+            <p id="photo-error" class="hidden text-xs font-semibold text-red-500" role="alert"></p>
+          </div>
         </div>
 
         <div>
@@ -145,6 +148,81 @@
       </form>
     </div>
   </main>
+
+  <script>
+    (function () {
+      const form = document.querySelector('form');
+      const photoInput = document.getElementById('photo');
+      const errorEl = document.getElementById('photo-error');
+      const isEditing = <%= editing ? 'true' : 'false' %>;
+
+      const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
+      const ALLOWED_MIME = ['image/jpeg', 'image/png', 'image/webp'];
+      const ALLOWED_EXTS = ['.jpg', '.jpeg', '.png', '.webp'];
+
+      function showError(msg) {
+        errorEl.textContent = msg;
+        errorEl.classList.remove('hidden');
+        photoInput.classList.add('border-red-500');
+        photoInput.classList.remove('border-gray-300');
+      }
+
+      function clearError() {
+        errorEl.textContent = '';
+        errorEl.classList.add('hidden');
+        photoInput.classList.remove('border-red-500');
+        photoInput.classList.add('border-gray-300');
+      }
+
+      function validateFile() {
+        const file = photoInput.files && photoInput.files[0];
+        if (!file) {
+          clearError();
+          return true;
+        }
+
+        const fileName = (file.name || '').toLowerCase();
+        const hasValidExt = ALLOWED_EXTS.some(ext => fileName.endsWith(ext));
+        const hasValidMime = file.type ? ALLOWED_MIME.includes(file.type) : true;
+
+        if (!hasValidExt || (file.type && !hasValidMime)) {
+          showError('Unsupported format. Please select a JPG, PNG, or WebP image.');
+          return false;
+        }
+
+        if (file.size > MAX_SIZE) {
+          const sizeMB = (file.size / (1024 * 1024)).toFixed(1);
+          showError('File is too large (' + sizeMB + ' MB). Maximum allowed size is 5 MB.');
+          return false;
+        }
+
+        clearError();
+        return true;
+      }
+
+      photoInput.addEventListener('change', validateFile);
+
+      form.addEventListener('submit', function (e) {
+        const hasFile = photoInput.files && photoInput.files.length > 0;
+
+        if (!hasFile) {
+          if (!isEditing) {
+            e.preventDefault();
+            showError('Please select a house photo to upload.');
+            photoInput.focus();
+            return;
+          }
+          clearError();
+          return;
+        }
+
+        if (!validateFile()) {
+          e.preventDefault();
+          photoInput.focus();
+        }
+      });
+    })();
+  </script>
 </body>
 
 </html>

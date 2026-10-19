@@ -60,12 +60,16 @@ app.use((req, res, next) => {
 
 const { storage: cloudinaryStorage } = require('./utils/cloudinary');
 
-const allowedMimeTypes = new Set(['image/jpeg', 'image/png']);
+const allowedMimeTypes = new Set(['image/jpeg', 'image/png', 'image/webp']);
+const allowedExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp']);
 const uploadPhoto = multer({
   storage: cloudinaryStorage,
   limits: { fileSize: 5 * 1024 * 1024, files: 1 },
   fileFilter: (_req, file, cb) => {
-    if (!allowedMimeTypes.has(file.mimetype)) return cb(new Error('Only JPG and PNG images up to 5 MB are allowed.'));
+    const ext = path.extname(file.originalname).toLowerCase();
+    if (!allowedMimeTypes.has(file.mimetype) || !allowedExtensions.has(ext)) {
+      return cb(new Error('Only JPG, PNG, and WebP images up to 5 MB are allowed.'));
+    }
     cb(null, true);
   },
 }).single('photo');
@@ -92,17 +96,22 @@ app.use((err, req, res, next) => {
     err instanceof multer.MulterError ||
     err.http_code === 403 ||
     err.name === "UnexpectedResponse" ||
-    /Only JPG and PNG|cloudinary|upload/i.test(err.message || "")
+    /Only JPG|cloudinary|upload|format/i.test(err.message || "")
   ) {
     console.error("Cloudinary / Upload Error:", {
       message: err.message,
       http_code: err.http_code,
       name: err.name,
+      code: err.code,
     });
-    const errorMsg =
-      err.message && /missing permissions/i.test(err.message)
-        ? "Cloudinary upload failed: API key has restricted permissions in Cloudinary console."
-        : err.message || "Invalid upload.";
+    let errorMsg = err.message || "Invalid upload.";
+    if (err.code === "LIMIT_FILE_SIZE") {
+      errorMsg = "File size exceeds 5 MB limit. Please upload a smaller image.";
+    } else if (err.message && /missing permissions/i.test(err.message)) {
+      errorMsg = "Cloudinary upload failed: API key has restricted permissions in Cloudinary console.";
+    } else if (err.message && /format.*not allowed/i.test(err.message)) {
+      errorMsg = "Only JPG, PNG, and WebP images up to 5 MB are allowed.";
+    }
     return res.status(400).send(errorMsg);
   }
   console.error(err);

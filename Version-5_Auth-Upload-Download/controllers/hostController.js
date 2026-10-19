@@ -71,7 +71,7 @@ exports.postAddHouse = async (req, res, next) => {
     if (!req.file)
       return res
         .status(422)
-        .send("Please upload a JPG or PNG image (maximum 5 MB).");
+        .send("Please upload a JPG, PNG, or WebP image (maximum 5 MB).");
 
     const photoUrl = req.file.path;
     const photoPublicId = req.file.filename;
