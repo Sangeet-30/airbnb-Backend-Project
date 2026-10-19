@@ -1,0 +1,150 @@
+<%- include('../partials/head') %>
+  </head>
+<body class="min-h-screen bg-gray-100 text-gray-800">
+  <%- include('../partials/navbar') %>
+
+  <header class="bg-white px-4 py-8 text-center shadow-sm">
+    <h1 class="text-3xl font-bold text-red-500">
+      <%= editing ? "Edit" : "Register" %> your house here
+    </h1>
+    <p class="mt-2 text-gray-500">
+      <%= editing ? "Update" : "Add" %> the details of your property.
+    </p>
+  </header>
+
+  <main class="mx-auto w-11/12 max-w-2xl py-10">
+    <div class="overflow-hidden rounded-2xl bg-white shadow-lg">
+      <div class="border-b border-gray-200 bg-gray-50 px-6 py-5">
+        <h2 class="text-xl font-bold text-gray-800">House Details</h2>
+        <p class="mt-1 text-sm text-gray-500">
+          Enter the information guests need to know.
+        </p>
+      </div>
+
+      <form
+        action="/host/<%= editing ? 'edit-house' : 'add-house' %>"
+        method="POST"
+        enctype="multipart/form-data"
+        class="grid gap-5 p-6"
+      >
+        <input type="hidden" name="id" value="<%= editing ? house._id : '' %>" />
+        <input type="hidden" name="oldPhoto" value="<%= editing ? house.photo : '' %>" />
+
+        <div>
+          <label for="houseName" class="mb-2 block font-semibold text-gray-700"
+            >House Name</label
+          >
+          <input
+            id="houseName"
+            type="text"
+            name="houseName"
+            value="<%= editing ? house.houseName : '' %>"
+            placeholder="Enter your house name"
+            required
+            class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100"
+          />
+        </div>
+
+        <div>
+          <label for="price" class="mb-2 block font-semibold text-gray-700"
+            >Price per Night (₹)</label
+          >
+          <input
+            id="price"
+            type="number"
+            name="price"
+            min="0"
+            value="<%= editing ? house.price : '' %>"
+            placeholder="Enter price per night"
+            required
+            class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100"
+          />
+        </div>
+
+        <div>
+          <label for="location" class="mb-2 block font-semibold text-gray-700"
+            >Location</label
+          >
+          <input
+            id="location"
+            type="text"
+            name="location"
+            value="<%= editing ? house.location : '' %>"
+            placeholder="Enter house location"
+            required
+            class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100"
+          />
+        </div>
+
+        <div>
+          <label for="rating" class="mb-2 block font-semibold text-gray-700"
+            >Rating (0 – 5)</label
+          >
+          <input
+            id="rating"
+            type="number"
+            name="rating"
+            min="0"
+            max="5"
+            step="0.1"
+            value="<%= editing ? house.rating : '' %>"
+            placeholder="e.g. 4.5"
+            required
+            class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100"
+          />
+        </div>
+
+        <div>
+          <label for="photo" class="mb-2 block font-semibold text-gray-700"
+            >House Photo <% if (editing) { %><span class="text-sm font-normal text-gray-400">(leave blank to keep current)</span><% } %></label
+          >
+
+          <% if (editing && house.photo) { %>
+          <div class="mb-3">
+            <p class="mb-1 text-xs text-gray-500">Current photo:</p>
+            <img
+              src="/<%= house.photo %>"
+              alt="Current photo"
+              class="h-36 w-full rounded-lg object-cover border border-gray-200"
+            />
+          </div>
+          <% } %>
+
+          <input
+            id="photo"
+            type="file"
+            accept="image/jpeg, image/png"
+            name="photo"
+            class="cursor-pointer w-full rounded-lg border border-gray-300 px-4 py-3 text-sm text-gray-500 outline-none file:mr-4 file:rounded-md file:border-0 file:bg-red-50 file:px-3 file:py-1 file:text-sm file:font-semibold file:text-red-600 hover:file:bg-red-100 focus:border-red-500 focus:ring-2 focus:ring-red-100"
+          />
+          <p class="mt-1 text-xs text-gray-400">JPG or PNG, max 5 MB.</p>
+        </div>
+
+        <div>
+          <label
+            for="description"
+            class="mb-2 block font-semibold text-gray-700"
+            >Description <span class="text-sm font-normal text-gray-400">(optional)</span></label
+          >
+          <textarea
+            id="description"
+            name="description"
+            rows="4"
+            placeholder="Describe your house — what makes it special, amenities, nearby attractions…"
+            class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100"
+          ><%= editing ? house.description : '' %></textarea>
+          <p class="mt-1 text-xs text-gray-400">If left empty, a default description will be shown to guests.</p>
+        </div>
+
+        <button
+          type="submit"
+          class="cursor-pointer mt-2 w-full rounded-lg bg-red-500 px-5 py-3 font-semibold text-white hover:bg-red-600 active:scale-95 transition"
+        >
+          <%= editing ? "Update" : "Register" %> House
+        </button>
+      </form>
+    </div>
+  </main>
+</body>
+
+</html>

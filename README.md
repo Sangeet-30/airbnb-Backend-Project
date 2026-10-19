@@ -30,6 +30,12 @@ The project is developed through multiple versions, with each version exploring 
 
 > Deployed on Render and connected to MongoDB Atlas. Uses Mongoose for application data and MongoDB-backed session storage for Express sessions. The Render free instance may take some time to respond after inactivity.
 
+### Version 5 — Authentication, Authorization, Upload & Download
+
+**Live Demo:**  Coming Soon....
+
+> Introduces user authentication, role-based authorization, property image uploads, and house-rules PDF downloads.
+
 ## 📂 Project Versions
 
 ### Version 1 — Normal
@@ -112,6 +118,40 @@ This version uses **Mongoose** for schema-based MongoDB interactions and introdu
 
 > **Security note:** The login flow is a learning demonstration and does not verify real user credentials. Host route checks rely on session state, and listings and favourites are not yet associated with individual authenticated users. Do not treat this as production authentication.
 
+### Version 5 — Authentication, Authorization, Upload & Download
+
+This version builds on Version 4 by introducing user authentication, role-based authorization, property image uploads, and PDF downloads.
+
+**Concepts covered:**
+
+- User signup and login
+- Password hashing using bcrypt
+- Session-based authentication
+- MongoDB-backed session storage
+- Guest and host roles
+- Role-based authorization and protected routes
+- Host ownership checks for property management
+- Mongoose schemas, models, and CRUD operations
+- Image uploads using Multer
+- File validation and upload handling
+- PDF downloads for house rules
+- Form validation and error handling
+- Environment variables for database credentials and session secrets
+- Tailwind CSS build and minification
+- Deployment with Render
+
+**Key features:**
+
+- Browse property listings and view house details
+- Add and remove favourite houses
+- Register and log in as a user
+- Restrict guest and host access according to their roles
+- Add, edit, and delete host-owned property listings
+- Upload property images
+- Download house rules as a PDF
+
+> **Note:** The bookings page is retained as a UI preview only. Actual booking creation and booking database functionality are not implemented in Version 5.
+
 ## 🛠️ Tech Stack
 
 - Node.js
@@ -123,9 +163,12 @@ This version uses **Mongoose** for schema-based MongoDB interactions and introdu
 - MySQL and MySQL2 (Version 2)
 - Aiven (Version 2)
 - MongoDB and the native MongoDB Node.js driver (Version 3)
-- MongoDB Atlas (Versions 3 and 4)
-- Mongoose (Version 4)
-- Express Session and MongoDB-backed session storage (Version 4)
+- MongoDB Atlas (Versions 3, 4, and 5)
+- Mongoose (Versions 4 and 5)
+- Express Session and MongoDB-backed session storage (Versions 4 and 5)
+- bcryptjs (Version 5)
+- Express Validator (Version 5)
+- Multer (Version 5)
 - dotenv
 
 ## ✨ Project Features
@@ -143,7 +186,12 @@ Features vary by version as the project evolves.
 - CRUD operations
 - Database integration
 - MVC architecture
-- Session-based state management in Version 4
+- Session-based state management
+- User authentication and password hashing
+- Guest and host role-based authorization
+- Host-owned property management
+- Property image uploads
+- PDF downloads
 
 ## 🔐 Configuration and Security
 
@@ -152,8 +200,10 @@ Features vary by version as the project evolves.
 - Keep `SESSION_SECRET` strong, private, and configured separately for local development and deployment.
 - Use separate database credentials with only the permissions each version needs.
 - Never publish database passwords, session secrets, or connection strings.
-- Use secure cookie settings in production and deploy behind HTTPS.
-- Do not treat the Version 4 demo login as production-ready unless real credential verification and user-specific authorization are implemented.
+- Use appropriate secure cookie settings in production and deploy behind HTTPS.
+- Version 4 uses a demo login flow and is not production-ready authentication.
+- Version 5 introduces password hashing and role-based access checks, but remains a learning project rather than a fully hardened production booking platform.
+- Uploaded images are stored on the local filesystem; persistent storage may be required to retain them across redeployments on hosting platforms with ephemeral storage.
 
 ## 📁 Project Structure
 
@@ -163,6 +213,7 @@ airbnb-Backend-Project/
 ├── Version-2_MySQL/
 ├── Version-3_MongoDB/
 ├── Version-4_Mongoose_Cookies_Sessions/
+├── Version-5_Auth-Upload-Download/
 ├── README.md
 └── .gitignore
 ```
@@ -173,5 +224,12 @@ airbnb-Backend-Project/
 - **Version 2:** MySQL with Aiven
 - **Version 3:** MongoDB with the native MongoDB Node.js driver
 - **Version 4:** Mongoose, cookies, and sessions
+- **Version 5:** Authentication, authorization, image uploads, and PDF downloads
 
-Each version builds on the previous one and explores a different approach to backend data storage, database integration, and session management.
+Each version builds on the previous one and explores a different approach to backend data storage, database integration, authentication, authorization, and file handling.
+
+## 👨‍💻 Author
+
+**Sangeet**
+
+GitHub: [Sangeet-30](https://github.com/Sangeet-30)

@@ -1,0 +1,35 @@
+{
+  "name": "chapter-10--airbnb",
+  "version": "1.0.0",
+  "description": "airbnb project",
+  "license": "ISC",
+  "author": "Sangeet",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "build": "npm run build:css",
+    "build:css": "tailwindcss -i ./views/input.css -o ./public/output.css --minify",
+    "tailwind": "tailwindcss -i ./views/input.css -o ./public/output.css --watch"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.6.1",
+    "nodemon": "^3.1.14",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^4.3.3"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "bcryptjs": "^3.0.3",
+    "connect-mongodb-session": "^5.0.0",
+    "dotenv": "^16.4.7",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.1",
+    "express-session": "^1.19.0",
+    "express-validator": "^7.3.2",
+    "mongoose": "^9.10.4",
+    "multer": "^2.4.0"
+  }
+}

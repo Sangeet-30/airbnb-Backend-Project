@@ -1,0 +1,130 @@
+// Core modules
+const path = require('path');
+const crypto = require('crypto');
+const fs = require('fs');
+
+// External modules
+const express = require('express');
+const session = require('express-session');
+const mongoose = require('mongoose');
+const MongoDBStore = require('connect-mongodb-session')(session);
+const multer = require('multer');
+const { randomUUID } = crypto;
+
+// Local modules
+const authRouter = require('./routes/authRouter');
+const storeRouter = require('./routes/storeRouter');
+const hostRouter = require('./routes/hostRouter');
+const pathDir = require('./utils/pathUtil');
+const errorsController = require('./controllers/errors');
+
+require('dotenv').config();
+
+const app = express();
+const PORT = Number(process.env.PORT) || 3000;
+const MONGO_URL = process.env.MONGO_URL;
+const SESSION_SECRET = process.env.SESSION_SECRET;
+
+if (!MONGO_URL || !SESSION_SECRET) {
+  console.error('Missing required environment variables: MONGO_URL and/or SESSION_SECRET');
+  process.exit(1);
+}
+
+const uploadsDir = path.join(pathDir, 'uploads');
+fs.mkdirSync(uploadsDir, { recursive: true });
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(pathDir, 'views'));
+if (process.env.NODE_ENV === 'production') app.set('trust proxy', 1);
+
+const store = new MongoDBStore({ uri: MONGO_URL, collection: 'sessions' });
+store.on('error', (err) => console.error('Session store error:', err.message));
+
+app.use(express.urlencoded({ extended: false, limit: '20kb' }));
+app.use(express.static(path.join(pathDir, 'public')));
+app.use('/uploads', express.static(uploadsDir));
+
+app.use(session({
+  name: 'airbnb.sid',
+  secret: SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store,
+  cookie: {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  },
+}));
+
+// Make session state consistently available to EJS views.
+app.use((req, res, next) => {
+  res.locals.isLoggedIn = Boolean(req.session?.isLoggedIn);
+  res.locals.user = req.session?.user || null;
+  next();
+});
+
+const storage = multer.diskStorage({
+  destination: (_req, _file, cb) => cb(null, uploadsDir),
+  filename: (_req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase();
+    cb(null, `${randomUUID()}${ext}`);
+  },
+});
+const allowedMimeTypes = new Set(['image/jpeg', 'image/png']);
+const uploadPhoto = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024, files: 1 },
+  fileFilter: (_req, file, cb) => {
+    if (!allowedMimeTypes.has(file.mimetype)) return cb(new Error('Only JPG and PNG images up to 5 MB are allowed.'));
+    cb(null, true);
+  },
+}).single('photo');
+
+// Apply upload middleware only to routes that accept a photo.
+app.use('/host/add-house', (req, res, next) => req.method === 'POST' ? uploadPhoto(req, res, next) : next());
+app.use('/host/edit-house', (req, res, next) => req.method === 'POST' ? uploadPhoto(req, res, next) : next());
+
+app.use(authRouter);
+app.use(storeRouter);
+
+// Authentication and authorization for host routes.
+app.use('/host', (req, res, next) => {
+  if (!req.session?.isLoggedIn || !req.session?.user) return res.redirect('/login');
+  if (req.session.user.userType !== 'host') return res.status(403).send('Host access required.');
+  next();
+});
+app.use('/host', hostRouter);
+
+app.use(errorsController.get404);
+app.use((err, req, res, next) => {
+  console.error(err);
+  if (res.headersSent) return next(err);
+  if (err instanceof multer.MulterError || /Only JPG and PNG/.test(err.message || '')) {
+    return res.status(400).send(err.message || 'Invalid upload.');
+  }
+  res.status(500).render('404', {
+    pageTitle: 'Server Error', currentPage: 'error', isLoggedIn: Boolean(req.session?.isLoggedIn),
+    user: req.session?.user || null,
+  });
+});
+
+mongoose.connect(MONGO_URL)
+  .then(() => {
+    console.log('Connected to MongoDB');
+    app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+  })
+  .catch((err) => {
+    console.error('MongoDB connection failed:', err.message);
+    process.exit(1);
+  });
+
+async function shutdown(signal) {
+  console.log(`${signal} received; shutting down...`);
+  await mongoose.disconnect();
+  store.close?.();
+  process.exit(0);
+}
+process.on('SIGTERM', () => shutdown('SIGTERM'));
+process.on('SIGINT', () => shutdown('SIGINT'));
